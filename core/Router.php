@@ -4,14 +4,20 @@ namespace app\core;
 
 class Router {
     protected $request;
+    protected $response;
     protected $routes = [];
     
-    function __construct(Request $request) {
+    function __construct($request, $response) {
         $this->request = $request;
+        $this->response = $response;
     }
 
     public function get($path, $callback) {
         $this->routes['get'][$path] = $callback;
+    }
+
+    public function post($path, $callback) {
+        $this->routes['post'][$path] = $callback;
     }
 
     public function resolve() {
@@ -19,7 +25,8 @@ class Router {
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
         if(!$callback) {
-            return "Not found";
+            $this->response->setStatusCode(404);
+            return $this->renderView('_404');
         } elseif (is_string($callback)) {
             return $this->renderView($callback);
         } else {
