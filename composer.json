@@ -1,0 +1,15 @@
+{
+    "name": "fatima/php-framework",
+    "authors": [
+        {
+            "name": "FatimaJaffal",
+            "email": "fatimajaffal.1997@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
